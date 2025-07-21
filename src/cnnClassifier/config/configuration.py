@@ -1,3 +1,6 @@
+ 
+from cnnClassifier.components.prepare_base_model import PrepareBaseModel
+
 from cnnClassifier.constants import *
 import os
 from pathlib import Path

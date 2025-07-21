@@ -1,3 +1,6 @@
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
+
 from cnnClassifier import logger 
 
 from cnnClassifier.pipeline.stage_01_data_ingestion import DataIngestionTrainingPipeline
