@@ -14,5 +14,6 @@ types-pyYAML
 scipy
 Flask
 Flask-Cors
+requests
 
 -e .
