@@ -16,10 +16,11 @@ class ConfigurationManager:
                  params_filepath=PARAMS_FILE_PATH):
 
         # Always resolve to the project root (parent of "src")
-        self.ROOT_DIR = Path(__file__).resolve().parent.parent.parent
+        self.ROOT_DIR = Path(__file__).resolve().parent.parent.parent.parent
+
 
         # Build paths for YAML configs
-        config_path = (self.ROOT_DIR / config_filepath).resolve()
+        config_path = (self.ROOT_DIR / "config" / "config.yaml").resolve()
         params_path = (self.ROOT_DIR / params_filepath).resolve()
 
         # Load YAML files
