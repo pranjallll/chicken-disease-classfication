@@ -1,9 +1,18 @@
-FROM python:3.10-slim
+FROM python:3.9-slim
 
-RUN apt update -y && apt install awscli -y
+# Set work directory
 WORKDIR /app
 
-COPY . /app
-RUN pip install -r requirements.txt
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["python", "app.py"]
+# Copy project files
+COPY . .
+
+# Expose port 8080 for Azure
+EXPOSE 8080
+
+# Use Gunicorn (production WSGI server) instead of python app.py
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "app:app"]
+

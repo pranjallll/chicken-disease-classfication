@@ -42,7 +42,5 @@ def predictRoute():
 
 if __name__ == "__main__":
     clApp = ClientApp()
-
-    # Azure requires the app to bind to the dynamic PORT variable
     port = int(os.environ.get("PORT", 8080))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host="0.0.0.0", port=port)
