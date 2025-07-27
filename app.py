@@ -31,7 +31,6 @@ def trainRoute():
     return "Training done successfully!"
 
 
-
 @app.route("/predict", methods=['POST'])
 @cross_origin()
 def predictRoute():
@@ -43,6 +42,7 @@ def predictRoute():
 
 if __name__ == "__main__":
     clApp = ClientApp()
-    # app.run(host='0.0.0.0', port=8080) #local host
-    
-    app.run(host='0.0.0.0', port=80) #for AZURE
+
+    # Azure requires the app to bind to the dynamic PORT variable
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
