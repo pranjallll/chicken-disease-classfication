@@ -1,0 +1,53 @@
+name: Build, Test, and Deploy to Azure
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Lint your code (placeholder, you can replace with your own commands)
+      - name: Lint code
+        run: echo "Linting repository"
+
+      # Run tests (placeholder)
+      - name: Run unit tests
+        run: echo "Running unit tests"
+
+      # Log in to Azure using your Service Principal credentials
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # Log in to Azure Container Registry (ACR)
+      - name: Log in to ACR
+        run: |
+          az acr login --name chickendiseaseapp
+
+      # Build and Push Docker image to ACR
+      - name: Build and Push Docker image
+        run: |
+          docker build -t chickendiseaseapp.azurecr.io/chickenapp:${{ github.sha }} .
+          docker push chickendiseaseapp.azurecr.io/chickenapp:${{ github.sha }}
+
+      # Deploy the container to Azure Web App
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: "chickenapp"  # Your App Service name
+          images: "chickendiseaseapp.azurecr.io/chickenapp:${{ github.sha }}"
